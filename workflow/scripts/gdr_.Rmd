@@ -1,0 +1,72 @@
+---
+  title: Data Processing with gDR Pipeline
+author: 
+  - name: gDR team
+email: gdr-support-d@gene.com
+date: "`r Sys.Date()`"
+output:
+  BiocStyle::html_document:
+  toc_float: yes
+titlecaps: false 
+code_folding: hide
+fig_height: 6
+fig_width: 8
+md_document:
+  preserve_yaml: yes
+compilation:
+  ncpu: 1
+memory: 20000
+time: 120
+module: R/devel
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE,
+                      dev = "png", dev.args = list(type = "cairo-png"))
+```
+
+```{css gDR_style, echo=FALSE}
+body {
+  max-width: 100%;
+}
+div.main-container {
+  max-width: 1500px;
+}
+.fullwidth p {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.fullwidth p > img {
+  max-width: 100%;
+  display: block;
+  padding: 0px 0px 0px 0px;
+}
+```
+# Load and Transform Data
+```{r import_data}
+library(gDRimport)
+library(gDRcore)
+# Current PUBLIC PRISM data can be downloaded directly from:
+# https://depmap.org/portal/data_page/?tab=allData
+# Below the example for DepMap Public 24Q4
+data_imported <- gDRimport::convert_LEVEL6_prism_to_gDR_input(
+  prism_data_path = "path/to/PRISMOncologyReferenceLFCMatrix.csv",
+  cell_line_data_path = "path/to/PRISMOncologyReferenceAnalyteMeta.csv",
+  treatment_data_path = "path/to/PRISMOncologyReferenceCompoundList.csv",
+  meta_data_path = "path_to/model.csv"
+)
+data_imported <- gDRcore::cleanup_metadata(data_imported)
+```
+# Run gDR Pipeline
+```{r run_pipeline}
+mae <- runDrugResponseProcessingPipeline(data_imported)
+```
+This completes the process of processing drug-dose response data using the gDRcore package.
+# gDR Session Info
+```{r, plot_packages}
+pkg_list <- as.data.frame(installed.packages(), stringsAsFactors = FALSE)
+gDR_packages <- pkg_list[grepl("gDR", pkg_list$Package),]
+print(unique(paste(gDR_packages$Package, gDR_packages$Version, sep = ": ")))
+```
