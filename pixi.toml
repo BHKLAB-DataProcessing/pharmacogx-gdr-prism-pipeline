@@ -13,13 +13,16 @@ docs = { features = ["docs"], solve-group = "default" }
 
 [activation]
 # convenient variables which can be used in scripts
-env.CONFIG = "${PWD}/config"
-env.METADATA = "${PWD}/metadata"
-env.LOGS = "${PWD}/logs"
-env.RAWDATA = "${PWD}/data/rawdata"
-env.PROCDATA = "${PWD}/data/procdata"
-env.RESULTS = "${PWD}/data/results"
-env.SCRIPTS = "${PWD}/workflow/scripts"
+env.CONFIG = "config"
+env.METADATA = "metadata"
+env.LOGS = "logs"
+env.RAWDATA = "data/rawdata"
+env.PROCDATA = "data/procdata"
+env.RESULTS = "data/results"
+env.SCRIPTS = "workflow/scripts"
+
+[tasks]
+download-depmap-index = "python $SCRIPTS/py/download_depmap_index.py"
 
 [dependencies]
 python = ">=3.12"
