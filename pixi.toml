@@ -10,6 +10,7 @@ platforms = ["linux-64"]
 [environments]
 quality = { features = ["quality"], solve-group = "default" }
 docs = { features = ["docs"], solve-group = "default" }
+pipeline = ["snakemake"]
 
 [activation]
 # convenient variables which can be used in scripts
@@ -30,27 +31,10 @@ ipython = "*"
 ipykernel = "*"
 jupyterlab = "*"
 pip = "*"
-r-base = "*"
-radian = "*"
-r-essentials= "*"
-r-devtools = "*"
-r-biocmanager = "*"
-
-bioconductor-biocstyle = ">=2.30.0,<3"
-bioconductor-biobase = "*"
-libcurl = ">=8.10.1,<9"
-r-rcurl = "*"
-r-rmarkdown = "*"
-r-languageserver = ">=0.3.16,<0.4"
-bioconductor-gdr = ">=1.4.0,<2"
 pandas = ">=2.2.3,<3"
+rich = ">=14.0.0,<15"
+tqdm = ">=4.67.1,<5"
 
-[target.linux-64.dependencies]
-# These are not currently available for osx-arm64 so let R/pak install when needed
-bioconductor-biomart = "*"
-bioconductor-biostrings = "*"
-bioconductor-iranges = "*"
-r-knitr = "*"
 
 ############################################## QUALITY ###############################################
 # Quality includes linting, type checking, and formatting
@@ -87,3 +71,6 @@ cmd = "mkdocs serve -f mkdocs.yaml"
 depends-on = ["doc-build"]
 inputs = ["docs"]
 description = "Serve documentation with mkdocs, runs doc-build first"
+
+[feature.snakemake.dependencies]
+snakemake = "*"

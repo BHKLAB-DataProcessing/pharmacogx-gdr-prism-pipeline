@@ -63,6 +63,17 @@ data_imported <- gDRcore::cleanup_metadata(data_imported)
 ```{r run_pipeline}
 mae <- runDrugResponseProcessingPipeline(data_imported)
 ```
+
+# Show gDR Pipeline Results
+```{r show_results}
+show(mae)
+```
+
+# Save gDR Pipeline Results
+```{r save_results}
+saveRDS(mae, file = "path/to/mae.rds")
+```
+
 This completes the process of processing drug-dose response data using the gDRcore package.
 # gDR Session Info
 ```{r, plot_packages}
